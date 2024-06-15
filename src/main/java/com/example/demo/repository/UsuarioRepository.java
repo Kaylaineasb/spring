@@ -2,10 +2,14 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    // Métodos de consulta personalizados podem ser adicionados aqui
-    Usuario findByLogin(String login);
+
+    boolean existsByLogin(String login);
+    UserDetails findByLogin(String login);
 }
