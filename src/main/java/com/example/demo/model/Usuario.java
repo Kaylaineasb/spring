@@ -26,9 +26,9 @@ public class Usuario implements UserDetails {
     private LocalDate dataNascimento;
     private String status; // Ativo ou Inativo
     private String password;
-    private UserRole role;
+    private int role;
 
-    public Usuario(String login,String password,UserRole role){
+    public Usuario(String login,String password,int role){
         this.login = login;
         this.password = password;
         this.role = role;
@@ -107,9 +107,18 @@ public class Usuario implements UserDetails {
         this.categoriasPreferidas = categoriasPreferidas;
     }
 
+    public UserRole getRole() {
+        return UserRole.valueOf(role);
+    }
+
+    public void setRole(UserRole role) {
+        if(role != null){
+            this.role = role.getCode();
+        }
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role==UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.getRole()==UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
         else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 

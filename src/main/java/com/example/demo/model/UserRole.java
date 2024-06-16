@@ -1,14 +1,26 @@
 package com.example.demo.model;
 
 public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
-    private String role;
-    UserRole(String role){
-       this.role = role;
+    ADMIN(1),
+    USER(2);
+
+
+    private int code;
+
+    UserRole(int code) {
+        this.code = code;
     }
 
-    public String getRole(){
-        return role;
+    public int getCode() {
+        return code;
+    }
+
+    public static UserRole valueOf(int code) {
+        for (UserRole value : UserRole.values()) {
+            if (value.getCode() == code) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("role não encontrado");
     }
 }
