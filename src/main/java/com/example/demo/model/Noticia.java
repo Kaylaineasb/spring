@@ -2,9 +2,18 @@ package com.example.demo.model;
 
 
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Noticia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,49 +21,24 @@ public class Noticia {
 
     private String titulo;
     private String imagem;
-    private LocalDateTime dataPublicacao;
+    private String descricao;
+    private String link;
+    private Date dataPublicacao;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Noticia)) return false;
+        Noticia noticia = (Noticia) o;
+        return Objects.equals(getId(), noticia.getId());
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(String imagem) {
-        this.imagem = imagem;
-    }
-
-    public LocalDateTime getDataPublicacao() {
-        return dataPublicacao;
-    }
-
-    public void setDataPublicacao(LocalDateTime dataPublicacao) {
-        this.dataPublicacao = dataPublicacao;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
