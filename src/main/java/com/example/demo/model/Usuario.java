@@ -24,14 +24,18 @@ public class Usuario implements UserDetails {
     private String login;
     private String email;
     private LocalDate dataNascimento;
-    private String status; // Ativo ou Inativo
+    private StatusUsuario status; // Ativo ou Inativo
     private String password;
     private int role;
 
-    public Usuario(String login,String password,int role){
+    public Usuario(String login,String password,int role, String nome, String fone, String email, LocalDate dataNascimento){
         this.login = login;
         this.password = password;
         this.role = role;
+        this.nome = nome;
+        this.fone = fone;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
 
     }
 
