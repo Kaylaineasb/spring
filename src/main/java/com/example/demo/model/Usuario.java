@@ -95,11 +95,11 @@ public class Usuario implements UserDetails {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getStatus() {
+    public StatusUsuario getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusUsuario status) {
         this.status = status;
     }
 
