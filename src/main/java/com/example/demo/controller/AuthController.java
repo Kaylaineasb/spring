@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
+
+//Controlador REST responsável pelo gerenciamento de autenticação e registro de usuários.
 @RestController
 @RequestMapping("auth")
 public class AuthController {
@@ -25,21 +27,24 @@ public class AuthController {
     private UsuarioRepository repository;
     @Autowired
     private TokenService tokenService;
+
+    //O método recebe dados de autenticação (login e senha), realiza a autenticação e,
+    //se bem-sucedida, gera um token JWT que é retornado na resposta.
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(),data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-
         var token = tokenService.generateToken((Usuario) auth.getPrincipal());
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
+    //O método recebe dados de registro (login, senha, papel, nome, telefone, email, data de nascimento),
+    //verifica se o login já está em uso e, caso contrário, salva o novo usuário no repositório.
+
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if(this.repository.findByLogin(data.login())!=null)return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        Usuario newUser = new Usuario(data.login(),encryptedPassword,data.role(),data.nome(),data.fone(), data.email(), data.dataNascimento()); 
-        // nao sei se  a  linha acima estar certa, nao testei apenas usei a  minha imaginacao
-
+        Usuario newUser = new Usuario(data.login(),encryptedPassword,data.role(),data.nome(),data.fone(), data.email(), data.dataNascimento());
         this.repository.save(newUser);
         return ResponseEntity.ok().build();
     }

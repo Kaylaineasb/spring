@@ -15,11 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+//Configuração de segurança para o sistema.
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Autowired
     SecurityFilter securityFilter;
+    //Configuração do filtro de segurança para diferentes URLs e métodos HTTP.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
@@ -35,10 +37,12 @@ public class SecurityConfiguration {
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+    //Configura o gerenciador de autenticação para o sistema.
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+    // Configura o codificador de senhas usado pelo sistema (BCrypt).
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

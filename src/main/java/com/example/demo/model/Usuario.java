@@ -115,11 +115,13 @@ public class Usuario implements UserDetails {
         return UserRole.valueOf(role);
     }
 
+    //Define o papel (role) do usuário a partir de um enum UserRole.
     public void setRole(UserRole role) {
         if(role != null){
             this.role = role.getCode();
         }
     }
+    // Retorna as autorizações do usuário com base no papel
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.getRole()==UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
@@ -135,21 +137,25 @@ public class Usuario implements UserDetails {
         return login;
     }
 
+    // Conta não expira
     @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
     }
 
+    // Conta não está bloqueada
     @Override
     public boolean isAccountNonLocked() {
         return UserDetails.super.isAccountNonLocked();
     }
 
+    // Credenciais não expiram
     @Override
     public boolean isCredentialsNonExpired() {
         return UserDetails.super.isCredentialsNonExpired();
     }
 
+    // Conta está habilitada
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();

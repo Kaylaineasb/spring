@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-
 @Repository
 public interface NoticiaRepository extends JpaRepository<Noticia, Long> {
     // Métodos de consulta personalizados podem ser adicionados aqui

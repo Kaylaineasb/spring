@@ -12,11 +12,13 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-//geração dos tokens
+//Serviço para geração, validação e manipulação de tokens JWT.
 @Service
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
+
+    //Método para gerar um token JWT para o usuário especificado.
     public String generateToken(Usuario user){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -30,6 +32,7 @@ public class TokenService {
             throw new RuntimeException("Error while generating token",exception);
         }
     }
+    // Método para validar e extrair o login do usuário a partir de um token JWT.
     public String validateToken(String token){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -42,6 +45,7 @@ public class TokenService {
             return "";
         }
     }
+    //Método para gerar a data de expiração do token (2 horas a partir do momento atual).
     public Instant generateExpirationDate(){
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }

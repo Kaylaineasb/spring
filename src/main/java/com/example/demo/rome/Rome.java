@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import java.net.URL;
 
+//Classe para ler e exibir informações de um feed RSS usando a biblioteca ROME.
 @AllArgsConstructor
 @Getter
 public class Rome {

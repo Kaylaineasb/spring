@@ -1,13 +1,8 @@
 package com.example.demo.model;
-
-
 import jakarta.persistence.*;
 import lombok.*;
-
-
 import java.util.Date;
 import java.util.Objects;
-
 
 @Entity
 @Getter
@@ -30,6 +25,7 @@ public class Noticia {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    //Sobrescreve o método equals para comparar objetos Noticia com base no ID.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -17,6 +17,7 @@ public class NoticiaService {
     @Autowired
     private UserPreferenceService userPreferenceService;
 
+    //Obtém as notícias com base nas preferências do usuário.
     public List<Noticia> getNoticias(Long userId) {
         List<Categoria> categorias = userPreferenceService.getUserPreferences(userId);
         if (categorias.isEmpty()) {

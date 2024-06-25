@@ -21,12 +21,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
 
+//Serviço para consumir e salvar notícias de um feed RSS.
+
 @Service
 public class RssFeedService {
     private static final Logger logger = LoggerFactory.getLogger(RssFeedService.class);
     @Autowired
     private NoticiaRepository noticiaRepository;
 
+    //Método agendado para consumir e salvar notícias de um feed RSS.
     @Scheduled(fixedRate = 3600000)
     public void consumirFeedRss() {
         try {
@@ -51,7 +54,7 @@ public class RssFeedService {
                     Noticia noticia = new Noticia();
                     noticia.setTitulo(titulo);
                     noticia.setLink(link);
-                    noticia.setDescricao(descricao); // Você pode querer limpar a descrição
+                    noticia.setDescricao(descricao);
                     noticia.setImagem(endImg);
                     noticia.setDataPublicacao(dataPublicacao);
                     noticiaRepository.save(noticia);
