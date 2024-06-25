@@ -26,8 +26,6 @@ public class UserService {
     }
     @Transactional
     public Usuario cadastrarUsuario(Usuario user) {
-        // Realizar validações antes de salvar o usuário
-        // Por exemplo, verificar se login e email já existem
         if (userRepository.existsByLogin(user.getLogin())) {
             throw new RuntimeException("Login já cadastrado");
         }
@@ -38,5 +36,4 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    // Outros métodos conforme necessário
 }

@@ -17,6 +17,7 @@ public interface NoticiaRepository extends JpaRepository<Noticia, Long> {
     @Query("SELECT COUNT(n) > 0 FROM Noticia n WHERE n.titulo = :titulo")
     boolean existsByTitulo(String titulo);
 
-    Object findByTitulo(String notíciaDeTeste);
+    Object findByTitulo(String noticiaDeTeste);
+    List<Noticia> findByCategoriaIn(List<Categoria> categorias);
 }
 
