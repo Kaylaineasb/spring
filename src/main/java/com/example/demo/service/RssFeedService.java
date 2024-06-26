@@ -1,4 +1,5 @@
 package com.example.demo.service;
+import com.example.demo.model.Categoria;
 import com.example.demo.model.Noticia;
 import com.example.demo.repository.NoticiaRepository;
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -32,8 +33,13 @@ public class RssFeedService {
     //Método agendado para consumir e salvar notícias de um feed RSS.
     @Scheduled(fixedRate = 3600000)
     public void consumirFeedRss() {
+        for (Categoria.Tipo categoria : Categoria.Tipo.values()) {
+            consumirFeedRssPorCategoria(categoria);
+        }
+    }
+    public void consumirFeedRssPorCategoria(Categoria.Tipo categoria) {
         try {
-            URL feedUrl = new URL("https://g1.globo.com/dynamo/rss2.xml");
+            URL feedUrl = new URL(categoria.getUrl());
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed feed = input.build(new XmlReader(feedUrl));
 

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,7 +46,16 @@ public class Usuario implements UserDetails {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-    private Set<Categoria> categoriasPreferidas;
+    private Set<Categoria> categoriasPreferidas=new HashSet<>();
+    public void addCategoriaPreferida(Categoria categoria) {
+        categoriasPreferidas.add(categoria);
+        categoria.getUsuarios().add(this);
+    }
+
+    public void removeCategoriaPreferida(Categoria categoria) {
+        categoriasPreferidas.remove(categoria);
+        categoria.getUsuarios().remove(this);
+    }
 
     public Long getId() {
         return id;

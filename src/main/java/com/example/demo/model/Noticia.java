@@ -16,14 +16,16 @@ public class Noticia {
     private Long id;
 
     private String titulo;
+    @Column(length = 65535, columnDefinition = "text")
     private String imagem;
+    @Column(length = 65535, columnDefinition = "text")
     private String descricao;
+    @Column(length = 65535, columnDefinition = "text")
     private String link;
     private Date dataPublicacao;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    @Enumerated(EnumType.STRING)
+    private Categoria.Tipo categoria;
 
     //Sobrescreve o método equals para comparar objetos Noticia com base no ID.
     @Override

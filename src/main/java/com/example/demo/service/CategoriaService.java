@@ -15,4 +15,9 @@ public class CategoriaService {
             categoriaRepository.save(novaCategoria);
         }
     }
+
+    public Categoria findById(Long categoriaId) {
+        return categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada: " + categoriaId));
+    }
 }
