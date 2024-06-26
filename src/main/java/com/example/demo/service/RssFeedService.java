@@ -47,14 +47,14 @@ public class RssFeedService {
                         .atZone(ZoneId.systemDefault())
                         .toLocalDateTime();
                 Date dataPublicacao = Date.from(dataPublicacaoLocalDateTime.atZone(ZoneId.systemDefault()).toInstant());
-
+                String descricaoLimitada = descricao.substring(0, Math.min(descricao.length(), 255));
 
                 // Verifica se a notícia já existe no banco de dados
                 if (!noticiaRepository.existsByTitulo(titulo)){
                     Noticia noticia = new Noticia();
                     noticia.setTitulo(titulo);
                     noticia.setLink(link);
-                    noticia.setDescricao(descricao);
+                    noticia.setDescricao(descricaoLimitada);
                     noticia.setImagem(endImg);
                     noticia.setDataPublicacao(dataPublicacao);
                     noticiaRepository.save(noticia);
