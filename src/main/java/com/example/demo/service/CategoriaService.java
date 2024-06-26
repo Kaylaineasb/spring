@@ -4,6 +4,8 @@ import com.example.demo.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoriaService {
     @Autowired
@@ -19,5 +21,9 @@ public class CategoriaService {
     public Categoria findById(Long categoriaId) {
         return categoriaRepository.findById(categoriaId)
                 .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada: " + categoriaId));
+    }
+
+    public Categoria findByTipo(Categoria.Tipo tipoCategoria) {
+        return categoriaRepository.findByTipo(tipoCategoria);
     }
 }

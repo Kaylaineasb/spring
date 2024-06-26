@@ -29,6 +29,10 @@ public class UserService {
     public Optional<Usuario> findById(Long id) {
         return userRepository.findById(id);
     }
+    public Categoria findCategoriaById(Long categoriaId) {
+        return categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada: " + categoriaId));
+    }
     @Transactional
     public Usuario cadastrarUsuario(Usuario user) {
         if (userRepository.existsByLogin(user.getLogin())) {
@@ -40,37 +44,14 @@ public class UserService {
 
         return userRepository.save(user);
     }
-    @Transactional
-    public void adicionarCategoriaPreferida(Long userId, Long categoryId) {
-        Usuario usuario = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
-
-        Categoria categoria = categoriaRepository.findById(categoryId)
-                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
-
-        usuario.addCategoriaPreferida(categoria);
-        userRepository.save(usuario);
-    }
-    @Transactional
-    public void removerCategoriaPreferida(Long userId, Long categoryId) {
-        Usuario usuario = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
-
-        Categoria categoria = categoriaRepository.findById(categoryId)
-                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
-
-        usuario.removeCategoriaPreferida(categoria);
-        userRepository.save(usuario);
+    public Usuario save(Usuario usuario) {
+        return userRepository.save(usuario);
     }
 
     public Set<Categoria> consultarCategoriasPreferidas(Long userId) {
         Usuario usuario = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
-
         return usuario.getCategoriasPreferidas();
     }
 
-    public Usuario save(Usuario usuario) {
-        return userRepository.save(usuario);
-    }
 }

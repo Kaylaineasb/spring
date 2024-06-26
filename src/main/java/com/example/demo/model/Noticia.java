@@ -2,7 +2,9 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,8 +26,9 @@ public class Noticia {
     private String link;
     private Date dataPublicacao;
 
-    @Enumerated(EnumType.STRING)
-    private Categoria.Tipo categoria;
+    @ManyToOne(fetch = FetchType.LAZY)  // Noticia tem uma única Categoria
+    private Categoria categoria;
+
 
     //Sobrescreve o método equals para comparar objetos Noticia com base no ID.
     @Override
@@ -35,11 +38,10 @@ public class Noticia {
         Noticia noticia = (Noticia) o;
         return Objects.equals(getId(), noticia.getId());
     }
-
-
-
     @Override
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+
 }

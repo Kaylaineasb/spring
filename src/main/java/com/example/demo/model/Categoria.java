@@ -2,14 +2,9 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-<<<<<<< HEAD
 
 import java.util.Set;
 
-=======
-
-import java.util.Set;
->>>>>>> d3ad49687f75516dc38037f5cc73a458dac97baa
 @Data
 @Entity
 public class Categoria {
@@ -26,7 +21,8 @@ public class Categoria {
     @ManyToMany(mappedBy = "categoriasPreferidas")
     private Set<Usuario> usuarios;
 
-<<<<<<< HEAD
+    private String nome;
+
     public enum Tipo {
         CARROS("https://g1.globo.com/dynamo/carros/rss2.xml"),
         CIENCIA_E_SAUDE("https://g1.globo.com/dynamo/ciencia-e-saude/rss2.xml"),
@@ -52,8 +48,16 @@ public class Categoria {
         public String getUrl() {
             return url;
         }
-    }
-=======
+        public static Tipo fromString(String text) {
+            for (Tipo tipo : Tipo.values()) {
+                if (tipo.name().equalsIgnoreCase(text)) {
+                    return tipo;
+                }
+            }
+            throw new IllegalArgumentException("No enum constant for text: " + text);
+        }
 
->>>>>>> d3ad49687f75516dc38037f5cc73a458dac97baa
+    }
+
+
 }

@@ -29,6 +29,8 @@ public class RssFeedService {
     private static final Logger logger = LoggerFactory.getLogger(RssFeedService.class);
     @Autowired
     private NoticiaRepository noticiaRepository;
+    @Autowired
+    private CategoriaService categoriaService;
 
     //Método agendado para consumir e salvar notícias de um feed RSS.
     @Scheduled(fixedRate = 3600000)
@@ -37,9 +39,15 @@ public class RssFeedService {
             consumirFeedRssPorCategoria(categoria);
         }
     }
-    public void consumirFeedRssPorCategoria(Categoria.Tipo categoria) {
+    public void consumirFeedRssPorCategoria(Categoria.Tipo categoriaTipo) {
         try {
-            URL feedUrl = new URL(categoria.getUrl());
+            Categoria categoria = categoriaService.findByTipo(categoriaTipo);
+            if (categoria == null) {
+                logger.error("Categoria não encontrada para o Tipo: {}", categoriaTipo);
+                return; // Ou outra ação conforme sua lógica de tratamento de erro
+            }
+
+            URL feedUrl = new URL(categoriaTipo.getUrl());
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed feed = input.build(new XmlReader(feedUrl));
 
@@ -56,18 +64,21 @@ public class RssFeedService {
                 String descricaoLimitada = descricao.substring(0, Math.min(descricao.length(), 255));
 
                 // Verifica se a notícia já existe no banco de dados
-                if (!noticiaRepository.existsByTitulo(titulo)){
+                if (!noticiaRepository.existsByTitulo(titulo)) {
                     Noticia noticia = new Noticia();
                     noticia.setTitulo(titulo);
                     noticia.setLink(link);
                     noticia.setDescricao(descricaoLimitada);
                     noticia.setImagem(endImg);
+                    noticia.setCategoria(categoria);
                     noticia.setDataPublicacao(dataPublicacao);
-                    noticiaRepository.save(noticia);
-                    logger.info("Notícia salva");
-                }else{
-                    logger.info("Notícia já existe");
 
+                    // Salva a notícia no banco de dados
+                    noticiaRepository.save(noticia);
+
+                    logger.info("Notícia salva: {}", noticia.getTitulo());
+                } else {
+                    logger.info("Notícia já existe: {}", titulo);
                 }
             }
         } catch (FeedException | IOException e) {
