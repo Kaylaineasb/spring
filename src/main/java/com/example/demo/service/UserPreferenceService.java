@@ -6,9 +6,10 @@ import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.repository.UserPreferenceRepository;
 import com.example.demo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserPreferenceService {
     @Autowired
     private UserPreferenceRepository userPreferenceRepository;

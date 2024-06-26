@@ -1,8 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.util.Set;
+import lombok.Data;
 
+import java.util.Set;
+@Data
 @Entity
 public class Categoria {
     @Id
@@ -17,35 +19,5 @@ public class Categoria {
     @ManyToMany(mappedBy = "categoriasPreferidas")
     private Set<Usuario> usuarios;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Set<Noticia> getNoticias() {
-        return noticias;
-    }
-
-    public void setNoticias(Set<Noticia> noticias) {
-        this.noticias = noticias;
-    }
-
-    public Set<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Set<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
 }
