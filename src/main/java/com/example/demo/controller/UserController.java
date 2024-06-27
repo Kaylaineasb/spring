@@ -30,31 +30,37 @@ public class UserController {
         Usuario newUser = userService.cadastrarUsuario(user);
         return ResponseEntity.ok(newUser);
     }
-// Endpoint para adicionar categorias preferidas a um usuário existente.
-@PostMapping("/{userId}/categorias")
-public ResponseEntity<Usuario> adicionarCategoriasPreferidas(
-        @PathVariable Long userId,
-        @RequestBody Set<Long> categoriaIds) {
 
-    // Busca o usuário pelo ID
-    Usuario usuario = userService.findById(userId)
-            .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado: " + userId));
+    // Endpoint para adicionar categorias preferidas a um usuário existente.
+    @PostMapping("/{userId}/categorias")
+    public ResponseEntity<Usuario> adicionarCategoriasPreferidas(
+            @PathVariable Long userId,
+            @RequestBody Set<Long> categoriaIds) {
 
-    // Busca as categorias pelo IDs fornecidos
-    Set<Categoria> categorias = new HashSet<>();
-    for (Long categoriaId : categoriaIds) {
-        Categoria categoria = categoriaService.findById(categoriaId);
-        if (categoria != null) {
-            categorias.add(categoria);
+        // Busca o usuário pelo ID
+        Usuario usuario = userService.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado: " + userId));
+
+        // Busca as categorias pelo IDs fornecidos
+        Set<Categoria> categorias = new HashSet<>();
+        for (Long categoriaId : categoriaIds) {
+            Categoria categoria = categoriaService.findById(categoriaId);
+            if (categoria != null) {
+                categorias.add(categoria);
+            }
         }
+
+        // Adiciona as categorias preferidas ao usuário
+        usuario.setCategoriasPreferidas(categorias); // mudei pra set pq n vi sentendo em chamar o metodo usuario.getCategoriasPreferidas().addAll(categorias);
+
+        // Salva o usuário atualizado
+        Usuario usuarioAtualizado = userService.save(usuario);
+
+        return ResponseEntity.ok(usuarioAtualizado);
     }
 
-    // Adiciona as categorias preferidas ao usuário
-    usuario.setCategoriasPreferidas(categorias); // mudei pra set pq n vi sentendo em chamar o metodo usuario.getCategoriasPreferidas().addAll(categorias);
-
-    // Salva o usuário atualizado
-    Usuario usuarioAtualizado = userService.save(usuario);
-
-    return ResponseEntity.ok(usuarioAtualizado);
-}
+    @GetMapping("/{userId}/categorias-preferidas")
+    public Set<Categoria> buscarCategoriasPreferidas(@PathVariable Long userId) {
+        return userService.consultarCategoriasPreferidas(userId);
+    }
 }
