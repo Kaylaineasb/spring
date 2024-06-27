@@ -21,9 +21,9 @@ public class UserController {
     @Autowired
     private CategoriaService categoriaService;
 
-    //Endpoint para cadastro de novos usuários.
-    //O método recebe um objeto Usuario no corpo da requisição, realiza o cadastro
-    //através do serviço de usuários e retorna o usuário cadastrado.
+
+    /* O método recebe um objeto Usuario no corpo da requisição, realiza o cadastro
+     através do serviço de usuários e retorna o usuário cadastrado.*/
 
     @PostMapping("/cadastro")
     public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario user) {
@@ -50,7 +50,7 @@ public ResponseEntity<Usuario> adicionarCategoriasPreferidas(
     }
 
     // Adiciona as categorias preferidas ao usuário
-    usuario.getCategoriasPreferidas().addAll(categorias);
+    usuario.setCategoriasPreferidas(categorias); // mudei pra set pq n vi sentendo em chamar o metodo usuario.getCategoriasPreferidas().addAll(categorias);
 
     // Salva o usuário atualizado
     Usuario usuarioAtualizado = userService.save(usuario);

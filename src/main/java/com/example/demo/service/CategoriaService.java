@@ -1,10 +1,9 @@
 package com.example.demo.service;
+
 import com.example.demo.model.Categoria;
 import com.example.demo.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CategoriaService {
@@ -12,7 +11,7 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     public  void salvarCategoria(Categoria novaCategoria){
-        Categoria categoria = categoriaRepository.findByNome(novaCategoria.getNome());
+        Categoria categoria = categoriaRepository.findByNome(novaCategoria.getTipo().name());
         if (categoria == null){
             categoriaRepository.save(novaCategoria);
         }
