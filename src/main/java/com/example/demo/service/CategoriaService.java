@@ -10,12 +10,6 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public  void salvarCategoria(Categoria novaCategoria){
-        Categoria categoria = categoriaRepository.findByNome(novaCategoria.getTipo().name());
-        if (categoria == null){
-            categoriaRepository.save(novaCategoria);
-        }
-    }
 
     public Categoria findById(Long categoriaId) {
         return categoriaRepository.findById(categoriaId)

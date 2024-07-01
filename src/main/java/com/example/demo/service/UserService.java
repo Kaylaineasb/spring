@@ -30,10 +30,6 @@ public class UserService {
     public Optional<Usuario> findById(Long id) {
         return userRepository.findById(id);
     }
-    public Categoria findCategoriaById(Long categoriaId) {
-        return categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada: " + categoriaId));
-    }
     @Transactional
     public Usuario cadastrarUsuario(Usuario user) {
         if (userRepository.existsByLogin(user.getLogin())) {

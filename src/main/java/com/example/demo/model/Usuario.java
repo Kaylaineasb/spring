@@ -46,16 +46,6 @@ public class Usuario implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
     private List<Categoria> categoriasPreferidas=new ArrayList<>();
-    public void addCategoriaPreferida(Categoria categoria) {
-        categoriasPreferidas.add(categoria);
-        categoria.getUsuarios().add(this);
-    }
-
-    public void removeCategoriaPreferida(Categoria categoria) {
-        categoriasPreferidas.remove(categoria);
-        categoria.getUsuarios().remove(this);
-    }
-
 
 
     public UserRole getRole() {

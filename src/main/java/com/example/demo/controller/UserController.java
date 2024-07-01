@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<List<Categoria>> findCategoriaUsuario(@PathVariable Long id){
+    public ResponseEntity<List<Categoria>> findCategoriaAndNoticiesUsuario(@PathVariable Long id){
         Usuario usuario = userService.findById(id).orElse(null);
         if (usuario != null){
             List<Categoria> categorias = usuario.getCategoriasPreferidas();

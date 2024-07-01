@@ -14,6 +14,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByLogin(String login);
 
     UserDetails findByLogin(String login);
-    Set<Categoria> findCategoriasPreferidasById(Long usuarioId);
 
 }
