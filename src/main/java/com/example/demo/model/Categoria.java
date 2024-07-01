@@ -20,6 +20,7 @@ public class Categoria {
 
     @ManyToMany(mappedBy = "categoriasPreferidas")
     private Set<Usuario> usuarios;
+    private String nome;
 
 
     public enum Tipo {

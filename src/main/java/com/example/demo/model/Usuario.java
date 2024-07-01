@@ -8,10 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -48,7 +45,7 @@ public class Usuario implements UserDetails {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
-    private Set<Categoria> categoriasPreferidas=new HashSet<>();
+    private List<Categoria> categoriasPreferidas=new ArrayList<>();
     public void addCategoriaPreferida(Categoria categoria) {
         categoriasPreferidas.add(categoria);
         categoria.getUsuarios().add(this);

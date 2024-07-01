@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ public class UserService {
         return userRepository.save(usuario);
     }
 
-    public Set<Categoria> consultarCategoriasPreferidas(Long userId) {
+    public List<Categoria> consultarCategoriasPreferidas(Long userId) {
         Usuario usuario = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
         return usuario.getCategoriasPreferidas();

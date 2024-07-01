@@ -22,7 +22,7 @@ public class NoticiaService {
     private UserService userService;
 
     public List<Noticia> getNoticias(Long userId) {
-        Set<Categoria> categorias = userService.consultarCategoriasPreferidas(userId);
+        List<Categoria> categorias = userService.consultarCategoriasPreferidas(userId);
         return noticiaRepository.findByCategoriaIn((List<Categoria>) categorias);
     }
     @Transactional
