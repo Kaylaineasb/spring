@@ -16,8 +16,6 @@ import java.util.List;
 public class NoticiaController {
     @Autowired
     private NoticiaService noticiaService;
-    @Autowired
-    private UserService userService;
 
 
     //Endpoint para obter uma lista de notícias associadas a um usuário específico.
