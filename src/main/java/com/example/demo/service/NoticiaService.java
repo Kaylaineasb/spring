@@ -23,7 +23,7 @@ public class NoticiaService {
 
     public List<Noticia> getNoticias(Long userId) {
         List<Categoria> categorias = userService.consultarCategoriasPreferidas(userId);
-        return noticiaRepository.findByCategoriaIn((List<Categoria>) categorias);
+        return noticiaRepository.findByCategoriaIn(categorias);
     }
     @Transactional
     public void associarCategorias(Long noticiaId, Long categoriaId) {

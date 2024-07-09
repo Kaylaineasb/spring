@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET,"/noticias/**").authenticated()
                                 .requestMatchers(HttpMethod.GET,"/users/{userId}").authenticated()
                                 .requestMatchers(HttpMethod.POST, "/noticias/{userId}/categorias").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/noticias").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/**").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 )
