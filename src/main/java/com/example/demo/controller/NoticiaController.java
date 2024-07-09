@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Noticia;
 import com.example.demo.service.NoticiaService;
-import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +15,6 @@ import java.util.List;
 public class NoticiaController {
     @Autowired
     private NoticiaService noticiaService;
-    @Autowired
-    private UserService userService;
 
 
     //Endpoint para obter uma lista de notícias associadas a um usuário específico.

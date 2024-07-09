@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.model.Categoria;
 import com.example.demo.model.Usuario;
-import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,7 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+
     public UserService(UsuarioRepository usuarioRepository) {
         this.userRepository = usuarioRepository;
     }
@@ -29,6 +27,7 @@ public class UserService {
     public Optional<Usuario> findById(Long id) {
         return userRepository.findById(id);
     }
+
     @Transactional
     public Usuario cadastrarUsuario(Usuario user) {
         if (userRepository.existsByLogin(user.getLogin())) {
@@ -40,6 +39,7 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
     public Usuario save(Usuario usuario) {
         return userRepository.save(usuario);
     }
