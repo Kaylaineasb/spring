@@ -1,4 +1,5 @@
 package com.example.demo.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class Usuario implements UserDetails {
         this.dataNascimento = dataNascimento;
 
     }
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "usuario_categoria",
@@ -47,7 +48,7 @@ public class Usuario implements UserDetails {
     )
     private List<Categoria> categoriasPreferidas=new ArrayList<>();
 
-
+    // Retorna o papel (role) do usuário como um enum UserRole
     public UserRole getRole() {
         return UserRole.valueOf(role);
     }

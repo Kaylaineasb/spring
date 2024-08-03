@@ -20,6 +20,12 @@ public class NoticiaService {
     @Autowired
     private UserService userService;
 
+    // Método para buscar todas as notícias
+    public List<Noticia> getAllNoticias() {
+        return noticiaRepository.findAll();
+    }
+
+    // Outros métodos existentes, por exemplo:
     public List<Noticia> getNoticias(Long userId) {
         List<Categoria> categorias = userService.consultarCategoriasPreferidas(userId);
         return noticiaRepository.findByCategoriaIn(categorias);

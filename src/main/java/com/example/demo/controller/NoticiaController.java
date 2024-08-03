@@ -17,13 +17,17 @@ public class NoticiaController {
     private NoticiaService noticiaService;
 
 
+    //  Endpoint para retornar todas as notícias.
+    @GetMapping("/all")
+    public ResponseEntity<List<Noticia>> getAllNoticias() {
+        List<Noticia> noticias = noticiaService.getAllNoticias();
+        return ResponseEntity.ok(noticias);
+    }
+
     //Endpoint para obter uma lista de notícias associadas a um usuário específico.
-    //O método recebe um ID de usuário como parâmetro de consulta, busca as notícias
-    //associadas a esse usuário através do serviço de notícias e retorna a lista de notícias.
     @GetMapping
     public ResponseEntity<List<Noticia>> getNoticias(@RequestParam Long userId) {
         List<Noticia> noticias = noticiaService.getNoticias(userId);
         return ResponseEntity.ok(noticias);
     }
-
 }

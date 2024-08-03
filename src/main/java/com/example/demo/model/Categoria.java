@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,12 +13,16 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Enum para representar o tipo de categoria, armazenado como uma string no banco de dados
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
 
+    // Conjunto de notícias associadas a esta categoria, ignorado na serialização JSON para evitar loops infinitos
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria")
     private Set<Noticia> noticias;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "categoriasPreferidas")
     private Set<Usuario> usuarios;
     private String nome;
