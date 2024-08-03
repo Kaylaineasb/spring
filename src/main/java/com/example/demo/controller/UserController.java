@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CategoriaNomeDTO;
 import com.example.demo.model.Categoria;
 import com.example.demo.model.Usuario;
 import com.example.demo.service.CategoriaService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 //gerenciamento do usuário
 @RestController
@@ -44,19 +46,25 @@ public class UserController {
         // Adiciona as categorias preferidas ao usuário
         usuario.setCategoriasPreferidas(categorias); // mudei pra set pq n vi sentendo em chamar o metodo usuario.getCategoriasPreferidas().addAll(categorias);
 
-        // Salva o usuário atualizado
+        // Salva o usuário atualizado no banco de dados
         Usuario usuarioAtualizado = userService.save(usuario);
 
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
+    // Endpoint para buscar as categorias preferidas e notícias de um usuário.
     @GetMapping(value = "/{id}")
-    public ResponseEntity<List<Categoria>> findCategoriaAndNoticiesUsuario(@PathVariable Long id){
+    public ResponseEntity<List<CategoriaNomeDTO>> findCategoriaAndNoticiesUsuario(@PathVariable Long id) {
         Usuario usuario = userService.findById(id).orElse(null);
-        if (usuario != null){
+        if (usuario != null) {
             List<Categoria> categorias = usuario.getCategoriasPreferidas();
-            return ResponseEntity.ok().body(categorias);
+            // Converte as categorias em DTOs para serem retornadas na resposta
+            List<CategoriaNomeDTO> categoriaNomeDTOs = categorias.stream()
+                    .map(c -> new CategoriaNomeDTO(c.getId(), c.getNome()))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok().body(categoriaNomeDTOs);
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 }
+

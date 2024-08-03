@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class Noticia {
     private String link;
     private Date dataPublicacao;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)  // Noticia tem uma única Categoria
     private Categoria categoria;
 
@@ -38,6 +40,7 @@ public class Noticia {
         Noticia noticia = (Noticia) o;
         return Objects.equals(getId(), noticia.getId());
     }
+    // Sobrescreve o método hashCode para gerar um hash baseado no ID
     @Override
     public int hashCode() {
         return Objects.hash(getId());
