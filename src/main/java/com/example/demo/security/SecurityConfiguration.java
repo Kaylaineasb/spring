@@ -37,7 +37,9 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST,"/user/**").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 )
+            // o token é validado antes do processamento da autenticação padrão
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+            //conclui a configuração e cria o SecurityFilterChain
                 .build();
     }
     //Configura o gerenciador de autenticação para o sistema.
