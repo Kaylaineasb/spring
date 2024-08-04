@@ -15,12 +15,14 @@ import java.time.ZoneOffset;
 //Serviço para geração, validação e manipulação de tokens JWT.
 @Service
 public class TokenService {
+    //chave secreta para assinatura
     @Value("${api.security.token.secret}")
     private String secret;
 
     //Método para gerar um token JWT para o usuário especificado.
     public String generateToken(Usuario user){
         try{
+            //algoritmo de assinatura
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("auth-api")
@@ -36,13 +38,14 @@ public class TokenService {
     public String validateToken(String token){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
+            //inicia a construção de um verificador
             return JWT.require(algorithm)
                     .withIssuer("auth-api")
                     .build()
                     .verify(token)
                     .getSubject();
         }catch (JWTVerificationException exception){
-            return "";
+            throw new RuntimeException("Invalid token",exception) ;
         }
     }
     //Método para gerar a data de expiração do token (2 horas a partir do momento atual).
