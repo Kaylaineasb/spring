@@ -32,8 +32,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             // Cria uma instância de autenticação com base nos detalhes do usuário
             var authentication = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
+            //permite que a aplicação saiba que o usuário está autenticado e tem as permisssões associadas
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        //continua a cadeia de filtros, passando os parametros para o proximo
         filterChain.doFilter(request,response);
     }
     //Recupera o token JWT do cabeçalho Authorization da requisição.
